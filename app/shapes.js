@@ -1,95 +1,48 @@
-import { UNIT, CTX } from './constants.js';
+var Shapes = [];
+/* I Piece */
+var iPiece = [
+    [0, 0, 0, 0],
+    [1, 1, 1, 1],
+    [0, 0, 0, 0],
+    [0, 0, 0, 0]
+];
 
-function drawSquare(xShift = 0, yShift = 0) {
-	var square = [
-		[0,0],
-		[1,1],
-		[1,0],
-		[0,1]
-	];
+/* J Piece */
+var jPiece = [
+    [0, 0, 1],
+    [1, 1, 1],
+    [0, 0, 0]
+];
 
-	square.forEach((item) => {
-		drawUnit(item[0] + xShift, item[1] + yShift, '#ff0000');
-	});
-	
+/* O Piece */
+var oPiece = [ 
+    [1, 1],
+    [1, 1]
+];
 
-}
-
-function drawLine(xShift = 0, yShift = 0) {
-	var line = [
-		[0,0],
-		[0,1],
-		[0,2],
-		[0,3]
-	];
-
-	line.forEach((item) => {
-		drawUnit(item[0] + xShift, item[1] + yShift, '#ff0000');
-	});
-}
-
-function drawLeftStair(xShift = 0, yShift = 0) {
-	var leftStair = [
-		[1,0],
-		[1,1],
-		[0,1],
-		[0,2]
-	];
-
-	leftStair.forEach((item) => {
-		drawUnit(item[0] + xShift, item[1] + yShift, '#ff0000');
-	});
-}
-
-function drawRightStair(xShift = 0, yShift = 0) {
-	var rightStair = [
-		[0,0],
-		[1,1],
-		[0,1],
-		[1,2]
-	];
-	
-	rightStair.forEach((item) => {
-		drawUnit(item[0] + xShift, item[1] + yShift, '#ff0000');
-	});
-}
-
-function drawCenterPiece(xShift = 0, yShift = 0) {
-	var centerPiece = [
-		[0,0],
-		[0,1],
-		[1,1],
-		[0,2]
-	]
-	centerPiece.forEach((item) => {
-		drawUnit(item[0] + xShift, item[1] + yShift, '#ff0000');
-	});
-}
-
-function drawUnit(x, y, color) {
-	var posX;
-	var poxY;
-
-    posX = x * UNIT;
-    poxY = y * UNIT;
-    colorUnit(color);
-    fillUnit(posX, poxY);
-}
-
-function colorUnit(color) {
-	CTX.fillStyle = color;
-}
-
-function fillUnit(x, y) {
-	CTX.fillRect(x, y, UNIT, UNIT);
-}
+/* S Piece */
+var sPiece = [ 
+    [0, 1, 1],
+    [1, 1, 0],
+    [0, 0, 0]
+];
 
 
+/* T Piece */
+var tPiece = [
+    [0, 1, 0],
+    [1, 1, 1],
+    [0, 0, 0]
+];
 
-export default {
-	drawSquare,
-	drawLine,
-	drawLeftStair,
-	drawRightStair,
-	drawCenterPiece
-}
+/* Z Piece */
+var zPiece = [
+    [1, 1, 0],
+    [0, 1, 1],
+    [0, 0, 0]
+];
+
+Shapes.push(iPiece, jPiece, oPiece, sPiece, tPiece, zPiece);
+
+export default Shapes;
+
