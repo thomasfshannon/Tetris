@@ -4,40 +4,62 @@ import { UNIT, CELL_WIDTH, CELL_HEIGHT } from './constants.js';
 // import './controls.js';
 
 var CTX = initializeGrid();
+var gameArr = buildGameArr();
 var xOffset = 0;
 
 function generateShape() {
-	return Shapes[1];
+	return Shapes[4];
 }
 
 function startGame() {
 	var shape = generateShape();
 	var shapeMod;
 	var y = 0;
-	var x = 0;
 	var shapeTime = setInterval(() => {
-		y++;
 		clearCanvas();
-		shape.map((line, x) => {
+		shape.map((line, lineIndex) => {
 			return line.map((item, i) => {
 				if(item == 1) {
-					console.log('called', line)
-					drawUnit(xOffset + i, x + item + y)
+					drawUnit(xOffset + i, lineIndex + item + y)
 				}
-				return item + y;
+				return lineIndex + item + y;
 				
 			})
 		})
-		if(y > CELL_HEIGHT -1) {
+		if(y > CELL_HEIGHT - 4) {
 			console.log(shape)
+			writeToGrid(shape, xOffset, y)
 			clearInterval(shapeTime)
 		}
-		
-	}, 1000);
+		y++;
+	}, 100);
 
 	
 }
-var count = 0;
+
+function writeToGrid(shape, xOffset, yOffset) {
+	var shapeMod = shape.map((line, lineIndex) => {
+		return line.map((item, i) => {
+			if(item == 1) {
+				return xOffset + i, lineIndex + item + yOffset
+			}
+			return 0;
+		})
+	})
+	
+	shapeMod.forEach((line, lineIndex) => {
+		line.forEach((item, i) => {
+			console.log('item => ',item)
+			if(item > 0) {
+				gameArr[yOffset + lineIndex][i] = 1;
+			}
+		})
+	})
+
+	console.log('g',gameArr)
+
+}
+
 function drawUnit(x,y) {
 	CTX.fillStyle = 'red';
 	CTX.fillRect(x * UNIT, y * UNIT, UNIT, UNIT);
@@ -48,66 +70,6 @@ startGame();
 function clearCanvas() {
 	CTX.clearRect(0, 0, CELL_WIDTH * UNIT, CELL_HEIGHT * UNIT)
 }
-// var shape1 = Shapes[0];
-
-// var xOffset = 0;
-
-// function drawShape() {
-// 	var y = 0;
-
-// 	var move = setInterval(() => {
-// 		console.log(xOffset)
-// 		y++;
-// 		clearCanvas();
-// 		shape1 = shape1.map((item, i) => {
-// 			return item.map((item,i) => {
-// 				console.log('item', item)
-// 				drawUnit(i + xOffset, y, 'red');
-// 				return [i + xOffset, y]
-// 			})
-// 		})
-// 		if(y == CELL_HEIGHT - 1) {
-// 			clearInterval(move)
-// 			writeToGrid(shape1)
-// 		}
-// 	},1000);
-
-// }
-
-// var gameArr = buildGameArr();
-
-// function writeToGrid(shapeToDetach) {
-// 	console.log(shapeToDetach)
-// 	console.log(gameArr)
-// }
-
-// function clearCanvas() {
-// 	CTX.clearRect(0, 0, CELL_WIDTH * UNIT, CELL_HEIGHT * UNIT);
-// }
-
-// drawShape();
-
-// function drawUnit(x, y, color) {
-// 	var posX;
-// 	var poxY;
-
-//     posX = x * UNIT;
-//     poxY = y * UNIT;
-//     colorUnit(color);
-//     fillUnit(posX, poxY);
-// }
-
-// function colorUnit(color) {
-// 	console.log('called', color)
-// 	CTX.fillStyle = color;
-// }
-
-// function fillUnit(x, y) {
-// 	CTX.fillRect(x, y, UNIT, UNIT);
-// }
-
-
-
 
 
 document.addEventListener('keydown', function(e) {
