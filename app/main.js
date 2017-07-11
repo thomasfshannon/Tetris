@@ -8,39 +8,56 @@ var gameArr = buildGameArr();
 var xOffset = 0;
 
 function generateShape() {
-	return Shapes[4];
+	var rand = Math.ceil(Math.random() * Shapes.length) -1;
+	return Shapes[rand];
 }
 
 function startGame() {
+	moveShape()
+}
+
+function moveShape() {
 	var shape = generateShape();
-	var shapeMod;
 	var y = 0;
 	var shapeTime = setInterval(() => {
 		clearCanvas();
-		shape.map((line, lineIndex) => {
-			return line.map((item, i) => {
-				if(item == 1) {
-					drawUnit(xOffset + i, lineIndex + item + y)
-				}
-				return lineIndex + item + y;
-				
-			})
-		})
+		renderBoardShapes();
+		redrawShape(shape, y)
 		if(y > CELL_HEIGHT - 4) {
-			console.log(shape)
 			writeToGrid(shape, xOffset, y)
 			clearInterval(shapeTime)
+			moveShape();
 		}
 		y++;
 	}, 100);
+}
 
-	
+function renderBoardShapes() {
+	gameArr.forEach((item, lineIndex) => {
+		item.forEach((item, i) => {
+			if(item !== 0) {
+				drawUnit(i,lineIndex)
+			}
+		}) 
+	})
+}
+
+function redrawShape(shape, y) {
+	shape.map((line, lineIndex) => {
+		return line.map((item, i) => {
+			if(item == 1) {
+				drawUnit(xOffset + i, lineIndex + item + y)
+			}
+			return lineIndex + item + y;
+			
+		})
+	})
 }
 
 function writeToGrid(shape, xOffset, yOffset) {
 	var shapeMod = shape.map((line, lineIndex) => {
 		return line.map((item, i) => {
-			if(item == 1) {
+			if(item !== 0) {
 				return xOffset + i, lineIndex + item + yOffset
 			}
 			return 0;
@@ -50,14 +67,11 @@ function writeToGrid(shape, xOffset, yOffset) {
 	shapeMod.forEach((line, lineIndex) => {
 		line.forEach((item, i) => {
 			console.log('item => ',item)
-			if(item > 0) {
-				gameArr[yOffset + lineIndex][i] = 1;
+			if(item !== 0) {
+				gameArr[yOffset + lineIndex][i + xOffset] = 1;
 			}
 		})
 	})
-
-	console.log('g',gameArr)
-
 }
 
 function drawUnit(x,y) {
