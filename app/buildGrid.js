@@ -12,7 +12,7 @@ export function initializeGrid() {
 }
 
 
-function buildGameArr() {
+export function buildGameArr() {
 	var gameBoard = [];
 	for (var y = 0; y < CELL_HEIGHT; y++) {
 		gameBoard.push([]);
@@ -25,30 +25,7 @@ function buildGameArr() {
 	return gameBoard;    
 }
 
-var gameArr = buildGameArr();
-
-function mergePieceIntoArray() {
-	var shape = Shapes[0];
-	console.log('a',shape);
-	// offset variable
-	// offSet X
-
-	shape.forEach((item, i) => {
-		gameArr[i] = [...item, ...gameArr[i].slice(item.length)];
-	});	
-}
-
-mergePieceIntoArray()
 
 
 
-
-
-
-// start game
-// make shape
-// increment y current shape
-// checker array 
-// merge shape into array
-// comparison as moves downward
 
