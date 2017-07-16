@@ -1,56 +1,55 @@
 import { initializeGrid, buildGameArr } from './buildGrid.js';
-import Shapes from './shapes.js';
+import Shape from './shapes.js';
 import { UNIT, CELL_WIDTH, CELL_HEIGHT } from './constants.js';
+import Color from './colors.js';
 // import './controls.js';
 
 var CTX = initializeGrid();
 var gameArr = buildGameArr();
 var xOffset = 0;
-
-function generateShape() {
-	var rand = Math.ceil(Math.random() * Shapes.length) -1;
-	return Shapes[rand];
-}
+var rotationIndex = 0;
 
 function startGame() {
-	moveShape()
+	var shape = (new Shape).generateShape(2);
+	setInterval(() => {
+		clearCanvas();
+		// renderBoardShapes();
+		shape.descend();
+		redrawShape(shape.getMatrix(), shape.getX(), shape.getY());
+	}, 1000);
+
+	
 }
 
-function moveShape() {
-	var shape = generateShape();
-	var y = 0;
-	var shapeTime = setInterval(() => {
-		clearCanvas();
-		renderBoardShapes();
-		redrawShape(shape, y)
-		if(y > CELL_HEIGHT - 4) {
-			writeToGrid(shape, xOffset, y)
-			clearInterval(shapeTime)
+function collisionCheck(shape, xOffset, yOffset, interval) {
+	// map over shape and check gameArr gameArr[x][y]
+	shape.forEach((item, i) => {
+		if(gameArr[yOffset][i] !== 0 || yOffset == 19) {
+			writeToGrid(shape, xOffset, yOffset)
+			clearInterval(interval)
 			moveShape();
 		}
-		y++;
-	}, 100);
+	});
 }
 
 function renderBoardShapes() {
 	gameArr.forEach((item, lineIndex) => {
 		item.forEach((item, i) => {
 			if(item !== 0) {
-				drawUnit(i,lineIndex)
+				drawUnit(i,lineIndex, i)
 			}
 		}) 
 	})
 }
 
-function redrawShape(shape, y) {
-	shape.map((line, lineIndex) => {
-		return line.map((item, i) => {
-			if(item == 1) {
-				drawUnit(xOffset + i, lineIndex + item + y)
+function redrawShape(matrix, x, y) {
+	matrix.forEach((line, lineIndex) => {
+		line.forEach((item, i) => {
+			if(item !== 0) {
+				drawUnit(i + x, lineIndex + y, i)
 			}
-			return lineIndex + item + y;
-			
 		})
+		
 	})
 }
 
@@ -66,7 +65,6 @@ function writeToGrid(shape, xOffset, yOffset) {
 	
 	shapeMod.forEach((line, lineIndex) => {
 		line.forEach((item, i) => {
-			console.log('item => ',item)
 			if(item !== 0) {
 				gameArr[yOffset + lineIndex][i + xOffset] = 1;
 			}
@@ -74,9 +72,10 @@ function writeToGrid(shape, xOffset, yOffset) {
 	})
 }
 
-function drawUnit(x,y) {
+function drawUnit(x, y) {
+	console.log(x,y)
 	CTX.fillStyle = 'red';
-	CTX.fillRect(x * UNIT, y * UNIT, UNIT, UNIT);
+	CTX.fillRect(x * UNIT, y * UNIT, UNIT -1, UNIT -1);
 }
 
 startGame();
@@ -90,14 +89,17 @@ document.addEventListener('keydown', function(e) {
 	switch(e.code) {
 		case 'ArrowLeft':
 			xOffset -= 1;
-			console.log('a',xOffset)
 			break;
 		case 'ArrowRight':
 			xOffset += 1;
-			console.log('b',xOffset)
 			break;
 		case 'ArrowUp':
-			// do nothing
+			if(rotationIndex < 3) {
+				rotationIndex++;
+				return;
+			}
+			rotationIndex = 0;
+
 			break;
 		case 'ArrowDown':
 			// 
@@ -106,4 +108,3 @@ document.addEventListener('keydown', function(e) {
 			break;
 	}	
 });
-
