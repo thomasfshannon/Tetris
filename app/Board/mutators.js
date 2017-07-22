@@ -3,7 +3,6 @@ import { initializeGrid, buildGameArr } from './index.js';
 var CTX = initializeGrid();
 var points = 0;
 export function writeToGrid(shape, coords, gameArr, color) {
-	console.log('shape context in write to grid =>', shape.color)
 	for(var i = 0; i < coords.length; i++) {
 		if(gameArr[coords[i][1]]) {
 			gameArr[coords[i][1]][coords[i][0]] = color;
@@ -62,7 +61,6 @@ export function drawUnit(x, y, num) {
 	if(Colors[num] == undefined) {
 		console.log('this is undefined =>',num)
 	}
-	console.log('color =>', Colors[num])
 	CTX.fillStyle = Colors[num] || 'lightblue';
 	CTX.fillRect(x * UNIT, y * UNIT, UNIT -1, UNIT -1);
 }

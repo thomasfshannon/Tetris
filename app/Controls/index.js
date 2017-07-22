@@ -48,7 +48,7 @@ function handleMove(direction, shape, gameArr) {
 
 function checkIfValidMove(gameArr, positions) {
 	for(let i = 0; i < positions.length; i++) {
-
+		console.log('positions  at valid =>', positions[i])
 		if(positions[i][0] < 0 || (positions[i][0] > 9)) {
 			return false;
 		}
@@ -56,7 +56,6 @@ function checkIfValidMove(gameArr, positions) {
 		if(gameArr[positions[i][1]][positions[i][0]]) {
 			return false;
 		}
-		
 	}
 	return true;
 }

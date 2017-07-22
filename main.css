@@ -10,3 +10,7 @@ canvas {
     display: block;
     width: 300px;
 }
+
+body {
+	background: #000;
+}

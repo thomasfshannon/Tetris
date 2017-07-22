@@ -7,21 +7,21 @@ import { writeToGrid, clearGameCanvas, drawUnit, renderBoardShapes, redrawShape,
 var gameArr = buildGameArr();
 
 function startGame() {
-	startSong()
+	// startSong()
 	startShape();
 }
 function startSong() {
-		var context = new (window.AudioContext || window.webkitAudioContext)();
-	    var analyser = context.createAnalyser();
-	    var source; 
-	    var audio0 = new Audio();   
-	    audio0.src = require('./tetris-theme.mp3');
-	    audio0.controls = true;
-	    audio0.autoplay = true;
-	    audio0.loop = true;
-	    source = context.createMediaElementSource(audio0);
-	    source.connect(analyser);
-	    analyser.connect(context.destination);
+	var context = new (window.AudioContext || window.webkitAudioContext)();
+    var analyser = context.createAnalyser();
+    var source; 
+    var audio0 = new Audio();   
+    audio0.src = require('./tetris-theme.mp3');
+    audio0.controls = true;
+    audio0.autoplay = true;
+    audio0.loop = true;
+    source = context.createMediaElementSource(audio0);
+    source.connect(analyser);
+    analyser.connect(context.destination);
 }
 var shapeCount = 0;
 function startShape() {
