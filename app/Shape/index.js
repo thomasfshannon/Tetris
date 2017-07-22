@@ -40,10 +40,7 @@ Shape.prototype.getX = function() {
 }
 
 Shape.prototype.shiftLeft = function() {
-	if(this.x > 0) {
-		return this.x--;
-	}
-	
+	return this.x--;
 }
 
 Shape.prototype.shiftRight = function() {
@@ -56,7 +53,7 @@ Shape.prototype.descend = function() {
 	return this.y++;
 }
 
-Shape.prototype.getCoords = function(x, y) {
+Shape.prototype.getCoords = function() {
 	var coords = []
 	this.getMatrix().forEach((row, y) => {
 		row.forEach((item, x) => {
