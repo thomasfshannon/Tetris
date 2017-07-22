@@ -16,7 +16,10 @@ export function bindController(shape, gameArr) {
 				
 				break;
 			case 'ArrowUp':
-				shape.rotate();
+				if(handleMove('rotate', shape, gameArr)) {
+					shape.rotate();
+				}
+				
 
 				break;
 			case 'ArrowDown':
@@ -29,19 +32,30 @@ export function bindController(shape, gameArr) {
 }
 
 function handleMove(direction,shape, gameArr) {
-	let mutator = direction == 'left' ? -1 : 1;
-	var positions = [];
+	let mutator;
+	if(direction == 'left') {
+		mutator = -1;
+	}
+	if(direction == 'right') {
+		mutator = 1;
+	}
+	if(direction == 'rotate') {
+		mutator = 0;
+	}
+	
+	let positions = [];
 	shape.getMatrix().forEach((row, y) => {
 		row.forEach((item, x)=> {
 			if(item !== 0) {
-				console.log(positions)
 				positions.push([x + shape.getX() + mutator, y + shape.getY()]);
 			}
 		})
 	});
-	for(var i = 0; i < positions.length; i++) {
-		console.log(positions[i][0] > 10)
-		if(positions[i][0] < 0 || (positions[i][0] > 9)) return false;
+	
+	for(let i = 0; i < positions.length; i++) {
+		if(positions[i][0] < 0 || (positions[i][0] > 9)) {
+			return false;
+		} 
 		if(gameArr[positions[i][1]][positions[i][0]]) {
 			return false;
 		}
@@ -50,12 +64,5 @@ function handleMove(direction,shape, gameArr) {
 
 }
 
-// function collided(shape, gameArr) {
-// 	var positions = shape.getCoords();
-// 	for(var i = 0; i < positions.length; i++) {
-// 		if(gameArr[positions[i][1]][positions[i][0]]) {
-// 			return positions;
-// 		}
-// 	}
-	
-// }
+// check rotation on boundaries
+

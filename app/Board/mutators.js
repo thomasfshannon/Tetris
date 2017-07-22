@@ -10,9 +10,9 @@ export function writeToGrid(shape, coords, gameArr) {
 
 export function renderBoardShapes(gameArr) {
 	gameArr.forEach((item, lineIndex) => {
-		item.forEach((item, i) => {
-			if(item !== 0) {
-				drawUnit(i,lineIndex, item, CTX)
+		item.forEach((block, i) => {
+			if(block !== 0) {
+				drawUnit(i,lineIndex, block, CTX)
 			}
 		}) 
 	})

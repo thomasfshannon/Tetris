@@ -39,7 +39,7 @@ function redrawShape(matrix, x, y) {
 	matrix.forEach((line, lineIndex) => {
 		line.forEach((item, i) => {
 			if(item !== 0) {
-				drawUnit(i + x, lineIndex + y, line)
+				drawUnit(i + x, lineIndex + y, item)
 			}
 		})
 	})
