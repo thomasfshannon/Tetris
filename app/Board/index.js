@@ -40,6 +40,6 @@ export function buildGameArr() {
 }
 
 
-
+// [1,1,1,1,1,1,1,1,1,1],
 
 

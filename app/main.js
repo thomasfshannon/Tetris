@@ -5,7 +5,7 @@ import Color from './colors.js';
 import { bindController } from './Controls/index.js';
 import { writeToGrid, clearGameCanvas, drawUnit, renderBoardShapes, collided } from './Board/mutators.js';
 var gameArr = buildGameArr();
-var speed = 1000;
+var speed = 10;
 
 
 function startGame() {
@@ -17,16 +17,40 @@ function startShape() {
 	bindController(shape, gameArr);
 	var clear = setInterval(() => {
 		clearGameCanvas();
-		var collisionCoords = collided(shape, gameArr)
-		collisionCoords ? handleCollision(clear, shape, collisionCoords) : continueGame(shape)
+		var collisionCoords = collided(shape, gameArr);
+		if(collisionCoords) {
+			if(collisionCoords == 'stop') {
+				return;
+			}
+			handleCollision(clear, shape, collisionCoords)
+			
+		}
 		renderBoardShapes(gameArr);
+		continueGame(shape);
 	}, speed);
 }
 
 function handleCollision(clear, shape, coords) {
-	writeToGrid(shape.getMatrix(), coords, gameArr);
+	if(writeToGrid(shape, coords, gameArr) == 'end') {
+		return gameOver(clear);
+	}
 	clearInterval(clear);
-	setTimeout(() => startShape(),0)
+	setTimeout(() => startShape(),200)
+}
+
+function gameOver(clear) {
+	clearInterval(clear);
+	playAgain();
+}
+
+function playAgain() {
+	var btn = document.getElementById('btn');
+	btn.classList.remove('hidden');
+	btn.addEventListener('click', function() {
+		gameArr = buildGameArr();
+		this.classList.add('hidden');
+		startGame();
+	});
 }
 
 function continueGame(shape) {

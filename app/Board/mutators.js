@@ -3,9 +3,25 @@ import { initializeGrid, buildGameArr } from './index.js';
 var CTX = initializeGrid();
 
 export function writeToGrid(shape, coords, gameArr) {
-	coords.forEach((coord) => {
-		gameArr[coord[1] -1][coord[0]] = 1;
-	})
+	let color = shape.getColor();
+	for(var i = 0; i < coords.length; i++) {
+		if(gameArr[coords[i][1] -1]) {
+			gameArr[coords[i][1] -1][coords[i][0]] = color;
+			cutArr(gameArr)
+		} else {
+			return 'end';
+		}
+	}
+
+}
+
+function cutArr(gameArr) {
+	for(var i = 0; i < gameArr.length -1; i++) {
+		if(gameArr[i].every(num => num !== 0)) {
+			gameArr.splice(i, 1);
+			gameArr.unshift([0,0,0,0,0,0,0,0,0,0]);
+		}
+	}
 }
 
 export function renderBoardShapes(gameArr) {

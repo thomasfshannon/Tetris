@@ -5,17 +5,19 @@ function Shape() {
 	this.y = 0;
 	this.rotationIndex = 0;
 	this.currentShape = [];
-	this.shapes = pieces
+	this.shapes = pieces;
+	this.color = null;
 }
 
 Shape.prototype.generateShape = function(num) {
 	if(num) {
-		this.currentShape = this.shapes[num];
+		this.currentShape = this.shapes[num].piece;
 		return this;
 	}
 
-	var rand = Math.ceil(Math.random() * this.shapes.length);
-	this.currentShape = this.shapes[rand];
+	var rand = Math.floor(Math.random() * this.shapes.length);
+	this.currentShape = this.shapes[rand].piece;
+	this.color = this.shapes[rand].color;
 	return this;
 }
 
@@ -37,6 +39,10 @@ Shape.prototype.getY = function() {
 
 Shape.prototype.getX = function() {
 	return this.x;
+}
+
+Shape.prototype.getColor = function() {
+	return this.color;
 }
 
 Shape.prototype.shiftLeft = function() {
