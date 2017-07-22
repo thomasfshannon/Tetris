@@ -1,7 +1,6 @@
 import { collided } from '../Board/mutators.js';
 
 export function bindController(shape, gameArr) {
-	console.log('shape =>', shape, gameArr)
 	document.addEventListener('keydown', function(e) {
 		switch(e.code) {
 			case 'ArrowLeft':
@@ -20,7 +19,9 @@ export function bindController(shape, gameArr) {
 				}
 				break;
 			case 'ArrowDown':
-				// 
+				if(handleDown()) {
+					shape.speedShift();
+				}
 				break;
 			default:
 				break;
@@ -28,7 +29,7 @@ export function bindController(shape, gameArr) {
 	});
 }
 
-function handleMove(direction,shape, gameArr) {
+function handleMove(direction, shape, gameArr) {
 	let mutator;
 	if(direction == 'left') {
 		mutator = -1;
@@ -40,27 +41,28 @@ function handleMove(direction,shape, gameArr) {
 		mutator = 0;
 	}
 
-	let positions = [];
-	shape.getMatrix().forEach((row, y) => {
-		row.forEach((item, x)=> {
-			if(item !== 0) {
-				positions.push([x + shape.getX() + mutator, y + shape.getY()]);
-			}
-		})
-	});
-	
+	let positions = shape.getCoords(mutator);
+	return checkIfValidMove(gameArr,positions)
+
+}
+
+function checkIfValidMove(gameArr, positions) {
 	for(let i = 0; i < positions.length; i++) {
+
 		if(positions[i][0] < 0 || (positions[i][0] > 9)) {
-			
 			return false;
-		} 
-		console.log(positions)
+		}
+
 		if(gameArr[positions[i][1]][positions[i][0]]) {
 			return false;
 		}
+		
 	}
 	return true;
+}
 
+function handleDown() {
+	return true;
 }
 
 // check rotation on boundaries

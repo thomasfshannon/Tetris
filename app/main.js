@@ -3,39 +3,44 @@ import Shape from './Shape/index.js';
 import { UNIT, CELL_WIDTH, CELL_HEIGHT } from './Constants/index.js';
 import Color from './colors.js';
 import { bindController } from './Controls/index.js';
-import { writeToGrid, clearGameCanvas, drawUnit, renderBoardShapes, collided } from './Board/mutators.js';
+import { writeToGrid, clearGameCanvas, drawUnit, renderBoardShapes, redrawShape, collided, addPoints } from './Board/mutators.js';
 var gameArr = buildGameArr();
-var speed = 10;
-
 
 function startGame() {
 	startShape();
 }
-
+var shapeCount = 0;
 function startShape() {
-	var shape = new Shape().generateShape();
+	let shape = new Shape().generateShape();
+	shapeCount++;
+	console.log('shape count =>', shapeCount)
+	console.log('shape color start =>', shape.color)
 	bindController(shape, gameArr);
-	var clear = setInterval(() => {
+	let clear = setInterval(() => {
+		addPoints(100);
 		clearGameCanvas();
-		var collisionCoords = collided(shape, gameArr);
+		let collisionCoords = collided(shape, gameArr);
 		if(collisionCoords) {
-			if(collisionCoords == 'stop') {
-				return;
-			}
-			handleCollision(clear, shape, collisionCoords)
-			
+			console.log('shape context in collisionCoords =>', shape.color)
+			handleCollision(clear, shape, collisionCoords, shape.color)
 		}
-		renderBoardShapes(gameArr);
-		continueGame(shape);
-	}, speed);
-}
 
-function handleCollision(clear, shape, coords) {
-	if(writeToGrid(shape, coords, gameArr) == 'end') {
+		renderBoardShapes(gameArr);
+		if(!collisionCoords && handleCollision) {
+			console.log('shape context before continueGame =>', shape.color)
+			continueGame(shape);
+		}
+		
+	}, shape.getSpeed());
+}
+function handleCollision(clear, shape, coords, color) {
+	console.log('shape context in handle collision =>', shape.color)
+	if(writeToGrid(shape, coords, gameArr, color) == 'end') {
 		return gameOver(clear);
 	}
 	clearInterval(clear);
-	setTimeout(() => startShape(),200)
+	setTimeout(() => startShape(), 200);
+	return true;
 }
 
 function gameOver(clear) {
@@ -44,7 +49,7 @@ function gameOver(clear) {
 }
 
 function playAgain() {
-	var btn = document.getElementById('btn');
+	let btn = document.getElementById('btn');
 	btn.classList.remove('hidden');
 	btn.addEventListener('click', function() {
 		gameArr = buildGameArr();
@@ -54,19 +59,9 @@ function playAgain() {
 }
 
 function continueGame(shape) {
-	redrawShape(shape.getMatrix(), shape.getX(), shape.getY());
+	redrawShape(shape);
 	shape.descend();
 	
-}
-
-function redrawShape(matrix, x, y) {
-	matrix.forEach((line, lineIndex) => {
-		line.forEach((item, i) => {
-			if(item !== 0) {
-				drawUnit(i + x, lineIndex + y, item)
-			}
-		})
-	})
 }
 
 startGame();
