@@ -14,7 +14,7 @@ Shape.prototype.generateShape = function(num) {
 		return this;
 	}
 
-	var rand = 2;
+	var rand = Math.ceil(Math.random() * this.shapes.length);
 	this.currentShape = this.shapes[rand];
 	return this;
 }
@@ -44,9 +44,7 @@ Shape.prototype.shiftLeft = function() {
 }
 
 Shape.prototype.shiftRight = function() {
-	if(this.x < 20) {
-		return this.x++;
-	}
+	return this.x++;
 }
 
 Shape.prototype.descend = function() {
