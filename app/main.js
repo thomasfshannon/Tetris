@@ -7,34 +7,43 @@ import { writeToGrid, clearGameCanvas, drawUnit, renderBoardShapes, redrawShape,
 var gameArr = buildGameArr();
 
 function startGame() {
+	startSong()
 	startShape();
+}
+function startSong() {
+		var context = new (window.AudioContext || window.webkitAudioContext)();
+	    var analyser = context.createAnalyser();
+	    var source; 
+	    var audio0 = new Audio();   
+	    audio0.src = require('./tetris-theme.mp3');
+	    audio0.controls = true;
+	    audio0.autoplay = true;
+	    audio0.loop = true;
+	    source = context.createMediaElementSource(audio0);
+	    source.connect(analyser);
+	    analyser.connect(context.destination);
 }
 var shapeCount = 0;
 function startShape() {
 	let shape = new Shape().generateShape();
 	shapeCount++;
-	console.log('shape count =>', shapeCount)
-	console.log('shape color start =>', shape.color)
 	bindController(shape, gameArr);
 	let clear = setInterval(() => {
 		addPoints(100);
 		clearGameCanvas();
 		let collisionCoords = collided(shape, gameArr);
 		if(collisionCoords) {
-			console.log('shape context in collisionCoords =>', shape.color)
 			handleCollision(clear, shape, collisionCoords, shape.color)
 		}
 
 		renderBoardShapes(gameArr);
 		if(!collisionCoords && handleCollision) {
-			console.log('shape context before continueGame =>', shape.color)
 			continueGame(shape);
 		}
 		
 	}, shape.getSpeed());
 }
 function handleCollision(clear, shape, coords, color) {
-	console.log('shape context in handle collision =>', shape.color)
 	if(writeToGrid(shape, coords, gameArr, color) == 'end') {
 		return gameOver(clear);
 	}

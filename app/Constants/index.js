@@ -1,4 +1,4 @@
-export const UNIT = 20;
+export const UNIT = 35;
 export const CELL_WIDTH = 10;
 export const CELL_HEIGHT = 22;
 

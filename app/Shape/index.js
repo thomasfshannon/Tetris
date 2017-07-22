@@ -7,7 +7,7 @@ function Shape() {
 	this.currentShape = [];
 	this.shapes = pieces;
 	this.color = null;
-	this.speed = 10;
+	this.speed = 500;
 }
 
 Shape.prototype.generateShape = function(num) {
