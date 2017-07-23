@@ -97,7 +97,7 @@ Shape.prototype.getRotationCoords = function() {
 	if(smallest < 0) {
 		smallest = Math.abs(smallest)
 		this.x  = this.x + smallest;
-		this.rotationIndex++;
+		this.rotationIndex = index;
 	}
 
 	return coords;
