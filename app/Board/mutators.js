@@ -30,6 +30,11 @@ export function addPoints(add) {
 	document.getElementById('points').innerHTML = points;
 }
 
+export function clearPoints(clear) {
+	points = clear;
+	document.getElementById('points').innerHTML = points;
+}
+
 export function renderBoardShapes(gameArr) {
 	for(let row = 0; row < gameArr.length; row++) {
 		for(let block = 0; block < gameArr[row].length; block++) {

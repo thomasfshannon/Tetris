@@ -6,8 +6,9 @@ function Shape() {
 	this.rotationIndex = 0;
 	this.currentShape = [];
 	this.shapes = pieces;
-	this.color = null;
+	this.color;
 	this.speed = 300;
+	this.list = []
 }
 
 Shape.prototype.generateShape = function(num) {
@@ -80,14 +81,27 @@ Shape.prototype.getRotationCoords = function() {
 		index = 0;
 	}
 	var coords = [];
-	this.currentShape[index].forEach((row, y) => {
-		row.forEach((item, x) => {
-			if(item !== 0) {
-				coords.push([x + this.getX(), y + this.getY()]);
+	let smallest = 0;
+	for(let row = 0; row < this.currentShape[index].length; row++) {
+		for(let block = 0; block < this.currentShape[index][row].length; block++) {
+			if(this.currentShape[index][row][block] !== 0) {
+				let x = block + this.getX();
+				let y = row + this.getY();
+				smallest = smallest > x ? x : smallest;
+				smallest = smallest > y ? y : smallest;
+				coords.push([x, y]);
 			}
-		})
-	});
+		}
+	}
+	
+	if(smallest < 0) {
+		smallest = Math.abs(smallest)
+		this.x  = this.x + smallest;
+		this.rotationIndex++;
+	}
+
 	return coords;
+	
 }
 
 export default Shape;

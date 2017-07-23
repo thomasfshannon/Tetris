@@ -48,7 +48,6 @@ function handleMove(direction, shape, gameArr) {
 
 function checkIfValidMove(positions, gameArr) {
 	let results = positions.every((coords, i) => {
-		
 		return checkBoundary(coords) && checkGameArr(gameArr, coords);
 	});
 	return results;

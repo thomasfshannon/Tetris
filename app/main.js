@@ -3,11 +3,12 @@ import Shape from './Shape/index.js';
 import { UNIT, CELL_WIDTH, CELL_HEIGHT } from './Constants/index.js';
 import Color from './colors.js';
 import { bindController } from './Controls/index.js';
-import { writeToGrid, clearGameCanvas, drawUnit, renderBoardShapes, redrawShape, collided, addPoints } from './Board/mutators.js';
+import { writeToGrid, clearGameCanvas, drawUnit, renderBoardShapes, redrawShape, collided, addPoints, clearPoints } from './Board/mutators.js';
 var gameArr = buildGameArr();
 
 function startGame() {
 	// startSong()
+
 	startShape();
 }
 function startSong() {
@@ -23,10 +24,9 @@ function startSong() {
     source.connect(analyser);
     analyser.connect(context.destination);
 }
-var shapeCount = 0;
+
 function startShape() {
 	let shape = new Shape().generateShape();
-	shapeCount++;
 	bindController(shape, gameArr);
 	let clear = setInterval(() => {
 		addPoints(100);
@@ -53,6 +53,7 @@ function handleCollision(clear, shape, coords, color) {
 }
 
 function gameOver(clear) {
+	clearPoints(0);
 	clearInterval(clear);
 	playAgain();
 }
