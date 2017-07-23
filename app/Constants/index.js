@@ -4,6 +4,8 @@ export const CELL_HEIGHT = 22;
 
 var c = document.getElementById("myCanvas");
 export const CTX = c.getContext("2d");
+export const PREVIEW = document.getElementById('preview').getContext('2d');
+
 
 export const SHAPES = [
 	"drawSquare",

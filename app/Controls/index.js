@@ -61,13 +61,7 @@ function checkGameArr(arr, coords) {
 	return arr[coords[1]][coords[0]] == 0;
 }
 
-// shape get potential rotation easy for other one just mutated x
-// now need to shift curr index and call checkIfValid
-
-
 function handleDown() {
 	return true;
 }
-
-// check rotation on boundaries
 

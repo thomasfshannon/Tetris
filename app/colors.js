@@ -3,7 +3,7 @@ const Color = {
 	orange: 'orange',
 	blue: 'blue',
 	red: 'red',
-	purple: 'purple',
+	light: 'lightblue',
 	yellow: 'yellow',
 	magenta: 'magenta',
 	green: 'green'
@@ -13,7 +13,7 @@ export default [
 	Color.orange,
 	Color.blue,
 	Color.red,
-	Color.purple,
+	Color.light,
 	Color.yellow,
 	Color.magenta,
 	Color.green

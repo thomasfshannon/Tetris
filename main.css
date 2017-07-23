@@ -7,13 +7,16 @@ body {
 
 canvas {
     float: left;
-    width: 300px;
     background-color:#111
 }
 
 #score-container {
 	display: inline-block;
 	margin: 0 2%;
+}
+
+#myCanvas {
+	width: 300px;
 }
 
 #score-container h2 {
@@ -47,5 +50,13 @@ button {
 .inline {
 	display: block;
 	margin: 0 auto;
-	width: 500px;
+	width: 700px;
+}
+
+.pad-top {
+	padding-top: 60px;
+}
+
+#scores {
+	padding-top: 0px;
 }

@@ -5,17 +5,18 @@
 	<link rel="stylesheet" href="./main.css">
 </head>
 	<body>
-		<div class="inline">
+		<div class="inline pad-top">
 			<canvas id="myCanvas"></canvas>
 			<div id="score-container">
+				<button id="btn">Play</button>
 				<button id="toggleMusic">Stop Music</button>
-				<button id="btn" class="hidden">Play Again</button>
 				<h4>Score</h4>
-				<div id="points"></div>
+				<div id="points">0</div>
 				<div>
 					<h4># of lines</h4>
 					<p id="line">0</p>
 				</div>
+				<canvas id="preview"></canvas>
 				<div id="score-wrap" class="hidden">
 					<h4>High Scores</h4>
 					<div id="scores"></div>

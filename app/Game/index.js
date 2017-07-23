@@ -38,20 +38,6 @@ function changeBtn(text) {
     document.getElementById('toggleMusic').innerHTML = text;
 }
 
-Game.prototype.renderList = function() {
-    let scores = localStorage.getItem('scores');
-    if(scores) {
-        let str = '';
-
-        JSON.parse(scores).forEach((item, i) => {
-            str+=`<li> ${i + 1} - ${item.points}</li>`
-        });
-
-        str = `<ul>${str}</ul>`;
-        document.getElementById('scores').innerHTML = str;
-    }
-}
-
 Game.prototype.playAgain = function(startGame) {
     let btn = document.getElementById('btn');
     let scores = document.getElementById('score-wrap');
@@ -68,7 +54,7 @@ Game.prototype.playAgain = function(startGame) {
 
 Game.prototype.addPoints = function(add) {
     this.points = this.points + add;
-    document.getElementById('points').innerHTML = this.points;
+    document.getElementById('points').innerHTML = Number(this.points).toLocaleString();
 }
 
 Game.prototype.clearPoints = function(clear) {

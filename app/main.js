@@ -4,25 +4,26 @@ import GAME from './Game/index.js';
 import { UNIT, CELL_WIDTH, CELL_HEIGHT } from './Constants/index.js';
 import Color from './colors.js';
 import { bindController } from './Controls/index.js';
-import { writeToGrid, clearGameCanvas, drawUnit, renderBoardShapes, redrawShape, collided, addPoints, clearPoints } from './Board/mutators.js';
+import { writeToGrid, clearGameCanvas, drawUnit, renderBoardShapes, redrawShape, collided } from './Board/mutators.js';
 var gameArr;
 
 function startGame() {
 	GAME.autoPlay();
 	gameArr = BOARD.buildGameArr();
-	GAME.renderList();
+	BOARD.generateShapeList();
+	BOARD.renderList();
 	startShape();
 }
 
 function startNew() {
 	gameArr = BOARD.buildGameArr();
-	GAME.renderList();
+	BOARD.renderList();
 	startShape();
 }
 
 
 function startShape() {
-	let shape = new Shape().generateShape();
+	let shape = BOARD.grabNextShape();
 	bindController(shape, gameArr);
 	let clear = setInterval(() => {
 		GAME.addPoints(100);
@@ -44,6 +45,7 @@ function handleCollision(clear, shape, coords, color) {
 		redrawShape(shape);
 		return gameOver(clear);
 	}
+	
 	clearInterval(clear);
 	setTimeout(() => startShape(), 200);
 	return true;
@@ -59,9 +61,11 @@ function gameOver(clear) {
 function continueGame(shape) {
 	redrawShape(shape);
 	shape.descend();
-	
 }
 
 
 
-startGame();
+let btn = document.getElementById('btn');
+btn.addEventListener('click', () => {
+	startGame()
+})
