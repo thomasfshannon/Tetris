@@ -49,7 +49,7 @@ function handleMove(direction, shape, gameArr) {
 function checkIfValidMove(positions, gameArr) {
 	let results = positions.every((coords, i) => {
 		console.log('at x',coords[0] >= 0)
-		return (9 > coords[0] && coords[0] >= 0)
+		return (9 >= coords[0] && coords[0] >= 0)
 	});
 	return results;
 }

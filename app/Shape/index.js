@@ -73,14 +73,21 @@ Shape.prototype.getCoords = function(mutator) {
 }
 
 Shape.prototype.getRotationCoords = function() {
-	let index = this.rotationIndex + 1;
-	if(index < 3)
-	if(this.rotationIndex < 3) {
-		this.rotationIndex++;
+	let index = this.rotationIndex;
+	if(index < 3) {
+		index++;
 	} else {
-		this.rotationIndex = 0;
+		index = 0;
 	}
-	this.currentShape[this.rotationIndex]
+	var coords = [];
+	this.currentShape[index].forEach((row, y) => {
+		row.forEach((item, x) => {
+			if(item !== 0) {
+				coords.push([x + this.getX(), y + this.getY()]);
+			}
+		})
+	});
+	return coords;
 }
 
 export default Shape;
