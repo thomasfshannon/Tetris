@@ -7,7 +7,7 @@ import { writeToGrid, clearGameCanvas, drawUnit, renderBoardShapes, redrawShape,
 var gameArr = buildGameArr();
 
 function startGame() {
-	startSong()
+	// startSong()
 	startShape();
 }
 function startSong() {
