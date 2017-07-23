@@ -6,10 +6,20 @@
 </head>
 	<body>
 		<div class="inline">
-			<h2>Tetris</h2>
-			<button id="btn" class="hidden">Play Again</button>
-			<div id="points"></div>
-			<canvas id="myCanvas" style="background-color:#111"></canvas>
+			<canvas id="myCanvas"></canvas>
+			<div id="score-container">
+				<button id="btn" class="hidden">Play Again</button>
+				<h4>Score</h4>
+				<div id="points"></div>
+				<div>
+					<h4># of lines</h4>
+					<p id="line">0</p>
+				</div>
+				<div id="score-wrap" class="hidden">
+					<h4>High Scores</h4>
+					<div id="scores"></div>
+				</div>
+			</div>
 		</div>
 		<script src="./bundle.js"></script>
 	</body>

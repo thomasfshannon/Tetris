@@ -1,5 +1,6 @@
 import { initializeGrid, buildGameArr } from './Board/index.js';
 import Shape from './Shape/index.js';
+import Game from './Game/index.js';
 import { UNIT, CELL_WIDTH, CELL_HEIGHT } from './Constants/index.js';
 import Color from './colors.js';
 import { bindController } from './Controls/index.js';
@@ -7,23 +8,12 @@ import { writeToGrid, clearGameCanvas, drawUnit, renderBoardShapes, redrawShape,
 var gameArr = buildGameArr();
 
 function startGame() {
-	// startSong()
-
+	let game = new Game();
+	game.startSong()
+	renderList();
 	startShape();
 }
-function startSong() {
-	var context = new (window.AudioContext || window.webkitAudioContext)();
-    var analyser = context.createAnalyser();
-    var source; 
-    var audio0 = new Audio();   
-    audio0.src = require('./tetris-theme.mp3');
-    audio0.controls = true;
-    audio0.autoplay = true;
-    audio0.loop = true;
-    source = context.createMediaElementSource(audio0);
-    source.connect(analyser);
-    analyser.connect(context.destination);
-}
+
 
 function startShape() {
 	let shape = new Shape().generateShape();
@@ -53,17 +43,20 @@ function handleCollision(clear, shape, coords, color) {
 }
 
 function gameOver(clear) {
-	clearPoints(0);
 	clearInterval(clear);
 	playAgain();
 }
 
 function playAgain() {
 	let btn = document.getElementById('btn');
+	let scores = document.getElementById('score-wrap');
 	btn.classList.remove('hidden');
+	scores.classList.remove('hidden');
 	btn.addEventListener('click', function() {
 		gameArr = buildGameArr();
 		this.classList.add('hidden');
+		scores.classList.add('hidden');
+		clearPoints(0);
 		startGame();
 	});
 }
@@ -75,3 +68,16 @@ function continueGame(shape) {
 }
 
 startGame();
+function renderList() {
+	let scores = localStorage.getItem('scores');
+	if(scores) {
+		let str = '';
+
+		JSON.parse(scores).forEach((item, i) => {
+			str+=`<li> ${i + 1} - ${item.points}</li>`
+		});
+
+		str = `<ul>${str}</ul>`;
+		document.getElementById('scores').innerHTML = str;
+	}
+}

@@ -1,26 +1,51 @@
+body {
+	font-family: helvetica;
+}
 .hidden {
-	display: none;
+	display: none!important;
 }
 
 canvas {
-    padding-left: 0;
-    padding-right: 0;
-    margin-left: auto;
-    margin-right: auto;
-    display: block;
+    float: left;
     width: 300px;
+    background-color:#111
+}
+
+#score-container {
+	display: inline-block;
+	margin: 0 3%;
+}
+
+#score-container h2 {
+	margin-top: 0;
 }
 
 body {
 	background: #000;
 }
 
+ul {
+	margin: 0;
+	padding: 0;
+}
+
+li {
+	list-style: none;
+}
+
 div, h2 {
 	color: #fff;
+}
+
+button {
+	padding: 15px;
+	border: none;
+	outline: none;
+
 }
 
 .inline {
 	display: block;
 	margin: 0 auto;
-	width: 300px;
+	width: 500px;
 }

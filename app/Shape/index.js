@@ -7,7 +7,7 @@ function Shape() {
 	this.currentShape = [];
 	this.shapes = pieces;
 	this.color;
-	this.speed = 300;
+	this.speed = 10;
 	this.list = []
 }
 
@@ -80,19 +80,21 @@ Shape.prototype.getRotationCoords = function() {
 	} else {
 		index = 0;
 	}
+
 	var coords = [];
 	let smallest = 0;
-	for(let row = 0; row < this.currentShape[index].length; row++) {
-		for(let block = 0; block < this.currentShape[index][row].length; block++) {
-			if(this.currentShape[index][row][block] !== 0) {
-				let x = block + this.getX();
-				let y = row + this.getY();
+
+	this.currentShape[index].forEach((row, yIndex) => {
+		row.forEach((item, xIndex) => {
+			if(item !== 0) {
+				let x = xIndex + this.getX();
+				let y = yIndex + this.getY();
 				smallest = smallest > x ? x : smallest;
 				smallest = smallest > y ? y : smallest;
 				coords.push([x, y]);
 			}
-		}
-	}
+		})
+	});
 	
 	if(smallest < 0) {
 		smallest = Math.abs(smallest)

@@ -28,7 +28,7 @@ export const Colors = [
 	Color.orange,
 	Color.blue,
 	Color.red,
-	Color.lightblue,
+	Color.lightBlue,
 	Color.yellow,
 	Color.magenta,
 	Color.green

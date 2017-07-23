@@ -2,24 +2,29 @@ import { UNIT, CELL_WIDTH, CELL_HEIGHT, Colors } from '../Constants/index.js';
 import { initializeGrid, buildGameArr } from './index.js';
 var CTX = initializeGrid();
 var points = 0;
+var lineCount = 0;
 export function writeToGrid(shape, coords, gameArr, color) {
+	// writes to game grid and returns game end if coords are out of bounds
 	for(var i = 0; i < coords.length; i++) {
 		if(gameArr[coords[i][1]]) {
 			gameArr[coords[i][1]][coords[i][0]] = color;
-			gameArr = cutArr(gameArr);
+			gameArr = chopLine(gameArr);
 		} else {
+			setScore()
 			return 'end';
 		}
 	}
 
 }
 
-function cutArr(gameArr) {
+function chopLine(gameArr) {
 	for(let row = 0; row < gameArr.length -1; row++) {
 		if(gameArr[row].every(num => num !== 0)) {
 			gameArr.splice(row, 1);
 			gameArr.unshift([0,0,0,0,0,0,0,0,0,0]);
-			addPoints(500)
+			addPoints(500);
+			addLine(1);
+
 		}
 	}
 	return gameArr;
@@ -31,8 +36,38 @@ export function addPoints(add) {
 }
 
 export function clearPoints(clear) {
-	points = clear;
+	points = clear
 	document.getElementById('points').innerHTML = points;
+}
+
+function addLine(num) {
+	lineCount = lineCount + num;
+	document.getElementById('line').innerHTML = lineCount;
+}
+
+function setScore() {
+	let scores = localStorage.getItem('scores');
+	if(!scores) {
+		localStorage.setItem('scores', JSON.stringify([{id: 1,points: points, lineCount: lineCount}]))
+	} else {
+		let newScores = JSON.parse(scores);
+		newScores.push({
+			points: points,
+			lineCount: lineCount
+		});
+
+		var sorted = newScores.sort((a, b) => {
+			return a.points < b.points;
+		})
+
+		let cut = sorted.slice(0, 10);
+		cut.sort((a, b) => {
+			return a.points < b.points;
+		})
+		
+		localStorage.setItem('scores', JSON.stringify(cut))
+
+	}
 }
 
 export function renderBoardShapes(gameArr) {
@@ -43,13 +78,6 @@ export function renderBoardShapes(gameArr) {
 			}
 		}
 	}
-	// gameArr.forEach((item, lineIndex) => {
-	// 	item.forEach((block, i) => {
-	// 		if(block !== 0) {
-	// 			drawUnit(i,lineIndex, block)
-	// 		}
-	// 	}) 
-	// })
 }
 
 export function redrawShape(shape) {
@@ -63,10 +91,7 @@ export function clearGameCanvas() {
 }
 
 export function drawUnit(x, y, num) {
-	if(Colors[num] == undefined) {
-		console.log('this is undefined =>',num)
-	}
-	CTX.fillStyle = Colors[num] || 'lightblue';
+	CTX.fillStyle = Colors[num];
 	CTX.fillRect(x * UNIT, y * UNIT, UNIT -1, UNIT -1);
 }
 
@@ -75,7 +100,7 @@ export function collided(shape, gameArr) {
 	var positions = shape.getCoords();
 	for(var i = 0; i < positions.length; i++) {
 		if(gameArr[positions[i][1]][positions[i][0]]) {
-			// returns explicit y offset since get coords is incremented
+			// returns explicit y offset since it is at collision point
 			return positions.map((item, i) => [item[0], item[1] - 1])
 		}
 	}
