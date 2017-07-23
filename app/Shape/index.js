@@ -7,7 +7,7 @@ function Shape() {
 	this.currentShape = [];
 	this.shapes = pieces;
 	this.color;
-	this.speed = 10;
+	this.speed = 100;
 	this.list = []
 }
 

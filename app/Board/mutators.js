@@ -1,8 +1,9 @@
 import { UNIT, CELL_WIDTH, CELL_HEIGHT, Colors } from '../Constants/index.js';
-import { initializeGrid, buildGameArr } from './index.js';
-var CTX = initializeGrid();
-var points = 0;
-var lineCount = 0;
+import BOARD from './index.js';
+import GAME from '../Game/index.js';
+
+var CTX = BOARD.initializeGrid();
+
 export function writeToGrid(shape, coords, gameArr, color) {
 	// writes to game grid and returns game end if coords are out of bounds
 	for(var i = 0; i < coords.length; i++) {
@@ -10,7 +11,7 @@ export function writeToGrid(shape, coords, gameArr, color) {
 			gameArr[coords[i][1]][coords[i][0]] = color;
 			gameArr = chopLine(gameArr);
 		} else {
-			setScore()
+			GAME.setScore();
 			return 'end';
 		}
 	}
@@ -22,52 +23,12 @@ function chopLine(gameArr) {
 		if(gameArr[row].every(num => num !== 0)) {
 			gameArr.splice(row, 1);
 			gameArr.unshift([0,0,0,0,0,0,0,0,0,0]);
-			addPoints(500);
-			addLine(1);
+			GAME.addPoints(500);
+			GAME.addLine(1);
 
 		}
 	}
 	return gameArr;
-}
-
-export function addPoints(add) {
-	points = points + add;
-	document.getElementById('points').innerHTML = points;
-}
-
-export function clearPoints(clear) {
-	points = clear
-	document.getElementById('points').innerHTML = points;
-}
-
-function addLine(num) {
-	lineCount = lineCount + num;
-	document.getElementById('line').innerHTML = lineCount;
-}
-
-function setScore() {
-	let scores = localStorage.getItem('scores');
-	if(!scores) {
-		localStorage.setItem('scores', JSON.stringify([{id: 1,points: points, lineCount: lineCount}]))
-	} else {
-		let newScores = JSON.parse(scores);
-		newScores.push({
-			points: points,
-			lineCount: lineCount
-		});
-
-		var sorted = newScores.sort((a, b) => {
-			return a.points < b.points;
-		})
-
-		let cut = sorted.slice(0, 10);
-		cut.sort((a, b) => {
-			return a.points < b.points;
-		})
-		
-		localStorage.setItem('scores', JSON.stringify(cut))
-
-	}
 }
 
 export function renderBoardShapes(gameArr) {

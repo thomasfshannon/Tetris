@@ -5,13 +5,17 @@
 import { UNIT, CELL_WIDTH, CELL_HEIGHT, CTX } from '../Constants/index.js';
 
 
-export function initializeGrid() {
-    CTX.canvas.width = CELL_WIDTH * UNIT;
-    CTX.canvas.height = CELL_HEIGHT * UNIT;
-    return CTX;
+function Board() {
+
 }
 
-export function buildGameArr() {
+Board.prototype.initializeGrid = function() {
+	CTX.canvas.width = CELL_WIDTH * UNIT;
+	CTX.canvas.height = CELL_HEIGHT * UNIT;
+	return CTX;
+}
+
+Board.prototype.buildGameArr = function() {
 	return [
 		[0,0,0,0,0,0,0,0,0,0],
 		[0,0,0,0,0,0,0,0,0,0],
@@ -39,7 +43,7 @@ export function buildGameArr() {
 	]  
 }
 
-
-// [1,1,1,1,1,1,1,1,1,1],
+const BOARD = new Board();
+export default BOARD;
 
 
