@@ -14,7 +14,7 @@ export function bindController(shape, gameArr) {
 				}
 				break;
 			case 'ArrowUp':
-				if(handleMove('rotate', shape, gameArr)) {
+				if(checkIfValidMove(shape.getRotationCoords(), gameArr)) {
 					shape.rotate();
 				}
 				break;
@@ -42,23 +42,21 @@ function handleMove(direction, shape, gameArr) {
 	}
 
 	let positions = shape.getCoords(mutator);
-	return checkIfValidMove(gameArr,positions)
+	return checkIfValidMove(positions, gameArr)
 
 }
 
-function checkIfValidMove(gameArr, positions) {
-	for(let i = 0; i < positions.length; i++) {
-		console.log('positions  at valid =>', positions[i])
-		if(positions[i][0] < 0 || (positions[i][0] > 9)) {
-			return false;
-		}
-
-		if(gameArr[positions[i][1]][positions[i][0]]) {
-			return false;
-		}
-	}
-	return true;
+function checkIfValidMove(positions, gameArr) {
+	let results = positions.every((coords, i) => {
+		console.log('at x',coords[0] >= 0)
+		return (9 > coords[0] && coords[0] >= 0)
+	});
+	return results;
 }
+
+// shape get potential rotation easy for other one just mutated x
+// now need to shift curr index and call checkIfValid
+
 
 function handleDown() {
 	return true;

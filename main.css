@@ -14,3 +14,13 @@ canvas {
 body {
 	background: #000;
 }
+
+div, h2 {
+	color: #fff;
+}
+
+.inline {
+	display: block;
+	margin: 0 auto;
+	width: 300px;
+}

@@ -72,5 +72,16 @@ Shape.prototype.getCoords = function(mutator) {
 	return coords;
 }
 
+Shape.prototype.getRotationCoords = function() {
+	let index = this.rotationIndex + 1;
+	if(index < 3)
+	if(this.rotationIndex < 3) {
+		this.rotationIndex++;
+	} else {
+		this.rotationIndex = 0;
+	}
+	this.currentShape[this.rotationIndex]
+}
+
 export default Shape;
 
