@@ -8,7 +8,13 @@ import { writeToGrid, clearGameCanvas, drawUnit, renderBoardShapes, redrawShape,
 var gameArr;
 
 function startGame() {
-	// GAME.startSong();
+	GAME.autoPlay();
+	gameArr = BOARD.buildGameArr();
+	GAME.renderList();
+	startShape();
+}
+
+function startNew() {
 	gameArr = BOARD.buildGameArr();
 	GAME.renderList();
 	startShape();
@@ -45,7 +51,7 @@ function handleCollision(clear, shape, coords, color) {
 
 function gameOver(clear) {
 	clearInterval(clear);
-	GAME.playAgain(startGame);
+	GAME.playAgain(startNew);
 }
 
 
@@ -55,5 +61,7 @@ function continueGame(shape) {
 	shape.descend();
 	
 }
+
+
 
 startGame();

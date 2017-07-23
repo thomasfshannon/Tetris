@@ -2,19 +2,40 @@
 function Game() {
 	this.audioContext = new (window.AudioContext || window.webkitAudioContext)();
     this.audioBuffer = new Audio();
-    this.source = this.audioContext.createMediaElementSource(this.audioBuffer)
-    this.points = 0;
-    this.lineCount = 0;
-}
-
-Game.prototype.startSong = function() {
-    var analyser = this.audioContext.createAnalyser();  
     this.audioBuffer.src = require('../tetris-theme.mp3');
     this.audioBuffer.controls = true;
     this.audioBuffer.autoplay = true;
     this.audioBuffer.loop = true;
+    this.playing = true;
+    this.source = this.audioContext.createMediaElementSource(this.audioBuffer)
+    this.points = 0;
+    this.lineCount = 0;
+
+    document.getElementById('toggleMusic').addEventListener('click', () => {
+        this.playing ? this.stopSong() : this.playSong();
+    })
+}
+
+Game.prototype.autoPlay = function() {
+    var analyser = this.audioContext.createAnalyser();  
     this.source.connect(analyser);
     analyser.connect(this.audioContext.destination);
+}
+
+Game.prototype.playSong = function() {
+    this.audioBuffer.play();
+    this.playing = true;
+    changeBtn('Stop Music')
+}
+
+Game.prototype.stopSong = function() {
+    this.audioBuffer.pause();
+    this.playing = false;
+    changeBtn('Start Music')
+}
+
+function changeBtn(text) {
+    document.getElementById('toggleMusic').innerHTML = text;
 }
 
 Game.prototype.renderList = function() {
