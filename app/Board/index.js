@@ -59,8 +59,9 @@ const previewArr =
 ]
 
 Board.prototype.renderPreview = function() {
+	// Todo get rid of this like soon its the offset x to preview shape
 	this.shapeList[0].getCoords().forEach((coord) => {
-		drawUnit(coord[0], coord[1], this.shapeList[0].color)
+		drawUnit(coord[0] - 3, coord[1], this.shapeList[0].color)
 	})
 
 }

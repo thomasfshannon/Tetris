@@ -1,13 +1,13 @@
 import pieces from './matrix.js';
 
 function Shape() {
-	this.x = 0;
+	this.x = 3;
 	this.y = 0;
 	this.rotationIndex = 0;
 	this.currentShape = [];
 	this.shapes = pieces;
 	this.color;
-	this.speed = 100;
+	this.speed = 500;
 	this.list = []
 }
 
